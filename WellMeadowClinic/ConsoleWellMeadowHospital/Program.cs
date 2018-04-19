@@ -11,7 +11,7 @@ namespace ConsoleWellMeadowHospital
     {
         static void Main(string[] args)
         {
-            Database.InitialzeDatabase.ConnectAndCreate();
+            Database.InitializeDatabase.ConnectAndCreate();
 
         }
     }
