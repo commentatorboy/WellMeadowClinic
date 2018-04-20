@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleWellMeadowHospital.Controllers
 {
-    class PatientAppointment
+    class PatientAppointmentController
     {
     }
 }

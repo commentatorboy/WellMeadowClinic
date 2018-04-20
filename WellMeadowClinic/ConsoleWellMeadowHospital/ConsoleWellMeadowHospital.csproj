@@ -42,7 +42,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\InitialzeDatabase.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\PatientAppointmentController.cs" />
+    <Compile Include="Controllers\QualificationController.cs" />
+    <Compile Include="Controllers\StaffController.cs" />
+    <Compile Include="Controllers\WardController.cs" />
+    <Compile Include="Controllers\WorkExperienceController.cs" />
+    <Compile Include="Database\InitializeDatabase.cs" />
+    <Compile Include="Database\Patient.cs" />
+    <Compile Include="Database\PatientAppointment.cs" />
+    <Compile Include="Database\Qualification.cs" />
+    <Compile Include="Database\Staff.cs" />
+    <Compile Include="Database\Ward.cs" />
+    <Compile Include="Database\WorkExperience.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

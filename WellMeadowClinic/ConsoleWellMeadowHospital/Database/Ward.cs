@@ -8,9 +8,28 @@ namespace ConsoleWellMeadowHospital.Database
 {
     class Ward
     {
-        int WardNumber;
-        string Location;
-        int TotalNumberOfBeds; //max 17 per ward
-        string TelephoneExtentionNumber;
+        int wardNumber;
+        string location;
+        int totalNumberOfBeds; //max 17 per ward
+        string telephoneExtentionNumber;
+
+        public int WardNumber {
+            get
+            {
+                return wardNumber;
+            }
+            set
+            {
+                if(value < 17)
+                {
+                    wardNumber =  value;
+                }
+                else
+                {
+                    wardNumber = 17;
+                }
+
+            }
+        }
     }
 }
