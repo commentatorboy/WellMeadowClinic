@@ -8,9 +8,14 @@ namespace ConsoleWellMeadowHospital.Database
 {
     class Qualification
     {
-        int QualificationID;
-        string NameOfInstitution;
-        DateTime DateOfQualification;
-        string Type;
+        int qualificationID;
+        string nameOfInstitution;
+        DateTime dateOfQualification;
+        string type;
+
+        public int QualificationID { get; set; }
+        public string NameOfInstitution { get; set; }
+        public DateTime DateOfQualification { get; set; }
+        public string Type { get; set; }
     }
 }

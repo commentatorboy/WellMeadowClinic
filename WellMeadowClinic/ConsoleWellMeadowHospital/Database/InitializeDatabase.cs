@@ -36,8 +36,8 @@ namespace ConsoleWellMeadowHospital.Database
         }
         static void Create(SqlConnection connection)
         {
-            RunProceduredStorage("CreateDateabase");
-            RunProceduredStorage("InsertData");
+            //RunProceduredStorage("CreateDateabase");
+            //RunProceduredStorage("InsertData");
 
         }
 
@@ -81,16 +81,17 @@ namespace ConsoleWellMeadowHospital.Database
 
         public static SqlException RunSqlCommand(SqlCommand cmd)
         {
-
+            cmd.Connection.ConnectionString = connectionString;
             using (connection = new SqlConnection(connectionString))
             {
 
-                connection.Open();
+                cmd.Connection.Open();
 
                 try
                 {
                     // Open the connection and execute the reader.
                     SqlDataReader reader = null;
+                    
                     reader = cmd.ExecuteReader();
 
 
@@ -103,7 +104,34 @@ namespace ConsoleWellMeadowHospital.Database
                     }
                     else
                     {
-                        Console.WriteLine("No rows found.");
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}", 
+                                    reader.GetInt32(0),
+                                    reader.GetString(1), 
+                                    reader.GetString(2),
+                                    reader.GetString(3),
+                                    reader.GetDateTime(4),
+                                    reader.GetString(5), 
+                                    reader.GetInt32(6),
+                                    reader.GetString(7),
+                                    reader.GetDecimal(8),
+                                    reader.GetString(9),
+                                    reader.GetInt32(10),
+                                    reader.GetString(11),
+                                    reader.GetString(12),
+                                    reader.GetInt32(13),
+                                    reader.GetInt32(14),
+                                    reader.GetInt32(15)
+                                    );
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No rows found.");
+                        }
                     }
                     reader.Close();
                 }

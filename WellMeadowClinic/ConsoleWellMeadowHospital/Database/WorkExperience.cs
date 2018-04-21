@@ -8,10 +8,17 @@ namespace ConsoleWellMeadowHospital.Database
 {
     class WorkExperience
     {
-        int WorkExperienceID;
-        string PreviousPosition;
-        string NameOfOrganisation;
-        DateTime StartDate;
-        DateTime FinishDate;
+        int workExperienceID;
+        string previousPosition;
+        string nameOfOrganisation;
+        DateTime startDate;
+        DateTime finishDate;
+
+
+        public int WorkExperienceID { get; set; }
+        public string PreviousPosition { get; set; }
+        public string NameOfOrganisation { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime FinishDate { get; set; }
     }
 }

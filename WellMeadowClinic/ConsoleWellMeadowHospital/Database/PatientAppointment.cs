@@ -8,9 +8,15 @@ namespace ConsoleWellMeadowHospital.Database
 {
     class PatientAppointment
     {
-        int AppointmentNumber;
-        DateTime DateOfAppointment;
-        string AppointmentRoom;
-        Patient PatientNumber;
+        int appointmentNumber;
+        DateTime dateOfAppointment;
+        string appointmentRoom;
+        int patientNumber;
+
+        public int AppointmentNumber { get; set; }
+        public DateTime DateOfAppointment { get; set; }
+        public string AppointmentRoom { get; set; }
+        public int PatientNumber { get; set; }
+
     }
 }

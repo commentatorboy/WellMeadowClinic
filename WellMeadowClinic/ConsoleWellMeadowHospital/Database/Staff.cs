@@ -22,7 +22,7 @@ namespace ConsoleWellMeadowHospital.Database
         string permanentOrTemporary;
         string salaryPayment; //monthly or weekly
         int appointmentNumber;
-        int workExperience;
+        int workExperienceID;
         int qualificationID;
 
         public int StaffNumber { get; set; }
@@ -39,7 +39,7 @@ namespace ConsoleWellMeadowHospital.Database
         public string PermenentOrTemporary { get; set; }
         public string SalaryPayment { get; set; }
         public int AppointmentNumber { get; set; }
-        public int WorkExperience { get; set; }
+        public int WorkExperienceID { get; set; }
         public int QualificationID { get; set; }
 
 
