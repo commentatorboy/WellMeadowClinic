@@ -17,9 +17,19 @@ namespace ConsoleWellMeadowHospital
 
             //Create staff data
             //CreateStaff();
-            ReadStaff();
-
+            //ReadStaff();
+            //UpdateStaff();
+            DeleteStaff();
             Console.Read();
+        }
+
+
+        static void DeleteStaff()
+        {
+            StaffController sc = new StaffController();
+            int id = 1;
+            SqlException err = sc.Delete(id);
+
         }
 
         static void ReadStaff()
@@ -31,9 +41,28 @@ namespace ConsoleWellMeadowHospital
 
         static void UpdateStaff()
         {
+            Staff staff = new Staff();
+            staff.CurrentPosition = "Chiefasdfasdf";
+            staff.AppointmentNumber = 1;
+            staff.CurrentSalary = 2.2;
+            staff.DateOfBirth = new DateTime(1999, 09, 12);
+            staff.FirstName = "John";
+            staff.FullAddress = "den nye vej 9";
+            staff.Gender = "male";
+            staff.InsuranceNumber = 1;
+            staff.LastName = "Doee";
+            staff.NumberOfHoursPerWeek = 1;
+            staff.PermenentOrTemporary = "temp";
+            staff.QualificationID = 1;
+            staff.SalaryPayment = "week";
+            staff.SalaryScale = "c";
+            staff.StaffNumber = 1;
+            staff.WorkExperienceID = 1;
+
             StaffController sc = new StaffController();
-            // LAV EN UPDATE !!!
-            sc.Update();
+            int id = 1;
+            SqlException s = sc.Update(staff, id);
+
 
         }
 

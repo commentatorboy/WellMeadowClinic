@@ -65,14 +65,14 @@ namespace ConsoleWellMeadowHospital.Controllers
 
             return res;
         }
-        public SqlException Update(Staff staff, string condition)
+        public SqlException Update(Staff staff, int id)
         {
-            string update = "UPDATE Staff" +
-                "SET (StaffNumber = @StaffNumber, FirstName = @FirstName, LastName = @LastName, FullAddress = @FullAddress, DateOfBirth = @DateOfBirth, " +
-                "Gender = @Gender, InsuranceNumber = @InsuranceNumber, CurrentPosition = @CurrentPosition, CurrentSalary = @CurrentSalary, SalaryScale = @SalaryScale" +
-                ", NumberOfHoursPerWeek = @NumberOfHoursPerWeek, PermenantOrTemporary = @PermenantOrTemporary, SalaryPayment = @SalaryPayment, " +
-                "AppointmentNumber = @AppointmentNumber, WorkExperienceID = @WorkExperienceID, QualificationID = @QualificationID" +
-                "WHERE @condition; ";
+            string update = "UPDATE Staff " +
+                "SET StaffNumber = @StaffNumber, FirstName = @FirstName, LastName = @LastName, FullAddress = @FullAddress, DateOfBirth = @DateOfBirth, " +
+                "Gender = @Gender, InsuranceNumber = @InsuranceNumber, CurrentPosition = @CurrentPosition, CurrentSalary = @CurrentSalary, " +
+                "SalaryScale = @SalaryScale, NumberOfHoursPerWeek = @NumberOfHoursPerWeek, PermenantOrTemporary = @PermenantOrTemporary, " +
+                "SalaryPayment = @SalaryPayment, AppointmentNumber = @AppointmentNumber, WorkExperienceID = @WorkExperienceID, QualificationID = @QualificationID " +
+                "WHERE StaffNumber = @id;";
 
             // 1. declare command object with parameter + insert query
             SqlCommand cmd = InitializeDatabase.CreateSqlCommand(update);
@@ -97,24 +97,32 @@ namespace ConsoleWellMeadowHospital.Controllers
                 new SqlParameter("@AppointmentNumber", SqlDbType.Int) {Value = staff.AppointmentNumber},
                 new SqlParameter("@WorkExperienceID", SqlDbType.Int) {Value = staff.WorkExperienceID},
                 new SqlParameter("@QualificationID", SqlDbType.Int) {Value = staff.QualificationID},
-                new SqlParameter("@condition", SqlDbType.NVarChar) {Value = condition},
+                new SqlParameter("@id", SqlDbType.Int) {Value = id},
+
 
             };
 
+            // 3. add new parameter to command object
+            cmd.Parameters.AddRange(prm.ToArray());
+
+            //run
             SqlException res = InitializeDatabase.RunSqlCommand(cmd);
 
             return res;
         }
-        public SqlException Delete(string condition)
+        public SqlException Delete(int id)
         {
-            string delete = "DELETE Staff WHERE @condition";
+            string delete = "DELETE Staff WHERE StaffNumber = @id";
 
             SqlCommand cmd = InitializeDatabase.CreateSqlCommand(delete);
 
             List<SqlParameter> prm = new List<SqlParameter>()
             {
-                new SqlParameter("@condition", SqlDbType.NVarChar) {Value = condition}
+                new SqlParameter("@id", SqlDbType.Int) {Value = id}
             };
+
+            // 3. add new parameter to command object
+            cmd.Parameters.AddRange(prm.ToArray());
 
             SqlException res = InitializeDatabase.RunSqlCommand(cmd);
 
