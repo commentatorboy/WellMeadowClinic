@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleWellMeadowHospital.Controllers
 {
-    class WardController
+    class IsInController
     {
-        public SqlException Create(Ward ward)
+        public SqlException Create(IsIn isin)
         {
 
 
-            //insert
-            string insert = "INSERT INTO Ward (Number, WardName, Location, TotalNumberOfBeds, TelephoneExtentionNumber)" +
-                " VALUES(@WardNumber, @WardName, @Location, @TotalNumberOfBeds, @TelephoneExtentionNumber); ";
+            //insert "Number" is ward number
+            string insert = "INSERT INTO IsIn (Shift, StaffNumber, Number)" +
+                " VALUES(@Shift, @StaffNumber, @Number); ";
 
             //create sql command, insert query, preparing quries, create parameterized quieries, 
 
@@ -28,11 +28,9 @@ namespace ConsoleWellMeadowHospital.Controllers
             // 2. define parameters used in command object
             List<SqlParameter> prm = new List<SqlParameter>()
             {
-                new SqlParameter("@WardNumber", SqlDbType.Int) {Value = ward.WardNumber},
-                new SqlParameter("@WardName", SqlDbType.NVarChar) {Value = ward.WardName},
-                new SqlParameter("@Location", SqlDbType.NVarChar) {Value = ward.Location},
-                new SqlParameter("@TotalNumberOfBeds", SqlDbType.Int) {Value = ward.TotalNumberOfBeds},
-                new SqlParameter("@TelephoneExtentionNumber", SqlDbType.NVarChar) {Value = ward.TelephoneExtentionNumber}
+                new SqlParameter("@Shift", SqlDbType.NVarChar) {Value = isin.Shift},
+                new SqlParameter("@StaffNumber", SqlDbType.Int) {Value = isin.StaffNumber},
+                new SqlParameter("@Number", SqlDbType.Int) {Value = isin.WardNumber}
 
             };
 
@@ -46,7 +44,8 @@ namespace ConsoleWellMeadowHospital.Controllers
         }
         public SqlException Read()
         {
-            string select = "SELECT * FROM Ward";
+            string select = "SELECT Staff.FirstName, Staff.LastName, Ward.Number FROM Staff " +
+                "JOIN IsIn ON Staff.StaffNumber=IsIn.StaffNumber JOIN Ward ON Ward.Number=IsIn.Number";
 
             // 1. declare command object with parameter + insert query
             SqlCommand cmd = InitializeDatabase.CreateSqlCommand(select);
@@ -56,10 +55,10 @@ namespace ConsoleWellMeadowHospital.Controllers
 
             return res;
         }
-        public SqlException Update(Ward ward, int id)
+        public SqlException Update(IsIn isin, int wardNumber)
         {
-            string update = "UPDATE Ward " +
-                "SET Number = @WardNumber, Location = @Location, TotalNumberOfBeds = @TotalNumberOfBeds, TelephoneExtentionNumber = @TelephoneExtentionNumber" + "WHERE WardNumber = @id;";
+            string update = "UPDATE IsIn " +
+                "SET Shift = @Shift, StaffNumber = @StaffNumber" + "WHERE Number = @wardNumber;";
 
             // 1. declare command object with parameter + insert query
             SqlCommand cmd = InitializeDatabase.CreateSqlCommand(update);
@@ -68,13 +67,9 @@ namespace ConsoleWellMeadowHospital.Controllers
             // 2. define parameters used in command object
             List<SqlParameter> prm = new List<SqlParameter>()
             {
-                new SqlParameter("@WardNumber", SqlDbType.Int) {Value = ward.WardNumber},
-                new SqlParameter("@Location", SqlDbType.NVarChar) {Value = ward.Location},
-                new SqlParameter("@TotalNumberOfBeds", SqlDbType.Int) {Value = ward.TotalNumberOfBeds},
-                new SqlParameter("@TelephoneExtentionNumber", SqlDbType.NVarChar) {Value = ward.TelephoneExtentionNumber},
-                
-                new SqlParameter("@id", SqlDbType.Int) {Value = id}
-
+                new SqlParameter("@Shift", SqlDbType.Int) {Value = isin.Shift},
+                new SqlParameter("@StaffNumber", SqlDbType.NVarChar) {Value = isin.StaffNumber},
+                new SqlParameter("@Number", SqlDbType.Int) {Value = isin.WardNumber}
 
             };
 
@@ -88,7 +83,7 @@ namespace ConsoleWellMeadowHospital.Controllers
         }
         public SqlException Delete(int id)
         {
-            string delete = "DELETE Ward WHERE Number = @id";
+            string delete = "DELETE IsIn WHERE IsInNumber = @id";
 
             SqlCommand cmd = InitializeDatabase.CreateSqlCommand(delete);
 

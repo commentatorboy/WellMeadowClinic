@@ -19,8 +19,62 @@ namespace ConsoleWellMeadowHospital
             //CreateStaff();
             //ReadStaff();
             //UpdateStaff();
-            DeleteStaff();
+            //DeleteStaff();
+            //Create Ward data
+            //CreateWard();
+            //CreateIsIn();
+            ReadIsIn();
+
             Console.Read();
+        }
+
+        static void CreateIsIn()
+        {
+            IsIn isin = new IsIn();
+            isin.Shift = "morn";
+            isin.StaffNumber = 3;
+            isin.WardNumber = 3;
+
+            IsInController iic = new IsInController();
+            SqlException iccer = iic.Create(isin);
+        }
+        
+        static void ReadIsIn()
+        {
+            IsInController iic = new IsInController();
+            SqlException iccer = iic.Read();
+        }
+
+        static void CreateWard()
+        {
+            for (int i = 1; i < 10; i++)
+            {
+                Ward ward = new Ward();
+                ward.Location = "ward " + i;
+                ward.TelephoneExtentionNumber = "+1"+i;
+                ward.WardNumber = i;
+                ward.WardName = "medical";
+
+                WardController wc = new WardController();
+                SqlException wcse = wc.Create(ward);
+
+            }
+
+
+        }
+        static void DeleteWard()
+        {
+
+        }
+
+        static void UpdateWard()
+        {
+
+        }
+
+        static void ReadWard()
+        {
+
         }
 
 
