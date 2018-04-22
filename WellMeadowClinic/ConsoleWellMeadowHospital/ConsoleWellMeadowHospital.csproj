@@ -42,7 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\InPatientsController.cs" />
     <Compile Include="Controllers\IsInController.cs" />
+    <Compile Include="Database\InPatient.cs" />
     <Compile Include="Database\IsIn.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PatientAppointmentController.cs" />

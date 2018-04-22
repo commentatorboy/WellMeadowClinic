@@ -29,6 +29,7 @@ namespace ConsoleWellMeadowHospital.Database
             using (connection = new SqlConnection(connectionString))
             {
 
+
                 connection.Open();
                 Create(connection);
                 
@@ -36,7 +37,7 @@ namespace ConsoleWellMeadowHospital.Database
         }
         static void Create(SqlConnection connection)
         {
-            //RunProceduredStorage("CreateDateabase");
+            //RunProceduredStorage("CreateDatabase");
             //RunProceduredStorage("InsertData");
 
         }
@@ -75,25 +76,40 @@ namespace ConsoleWellMeadowHospital.Database
 
         public static SqlCommand CreateSqlCommand(string queryString)
         {
+
             SqlCommand command = new SqlCommand(queryString, connection);
             return command;
         }
 
         public static SqlException RunSqlCommand(SqlCommand cmd)
         {
+            
             cmd.Connection.ConnectionString = connectionString;
-            using (connection = new SqlConnection(connectionString))
+            try 
             {
-
                 cmd.Connection.Open();
+                SqlConnection realconnection = cmd.Connection;
+                SqlTransaction transaction = realconnection.BeginTransaction(IsolationLevel.ReadCommitted);
+
+                cmd.Transaction = transaction;
+
 
                 try
                 {
-                    // Open the connection and execute the reader.
+                    // Open the connection and execute the reader with transactions
                     SqlDataReader reader = null;
-                    
-                    reader = cmd.ExecuteReader();
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        transaction.Commit();
 
+                    }
+                    catch(SqlException e)
+                    {
+                        transaction.Rollback();
+                    }
+
+                    reader = cmd.ExecuteReader();
 
                     if (reader.RecordsAffected > 0)
                     {
@@ -106,14 +122,26 @@ namespace ConsoleWellMeadowHospital.Database
                     {
                         if (reader.HasRows)
                         {
+                            string text = "";
                             int count = reader.FieldCount;
+                            string columnsText = "";
+                            //get field names
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                columnsText += reader.GetName(i) + "\t";
+                            }
+                            Console.WriteLine(columnsText);
+
                             while (reader.Read())
                             {
                                 for (int i = 0; i < count; i++)
                                 {
-                                    Console.WriteLine(reader.GetValue(i));
+
+                                    text += reader.GetValue(i) + "\t";
                                 }
                             }
+                            Console.WriteLine(text);
+
                         }
                         else
                         {
@@ -130,12 +158,14 @@ namespace ConsoleWellMeadowHospital.Database
 
 
                 }
+            }
+            finally
+            {
                 SqlException sqlException = null;
                 connection.Close();
-
-
-                return sqlException;
             }
+            return null;
+
 
         }
 

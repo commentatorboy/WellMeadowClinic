@@ -14,18 +14,79 @@ namespace ConsoleWellMeadowHospital
         static void Main(string[] args)
         {
             InitializeDatabase.ConnectAndCreate();
-
             //Create staff data
-            //CreateStaff();
-            //ReadStaff();
-            //UpdateStaff();
-            //DeleteStaff();
+            CreateStaff();
+            ReadStaff();
+            UpdateStaff();
+            DeleteStaff();
             //Create Ward data
-            //CreateWard();
-            //CreateIsIn();
+            CreateWard();
+            CreateIsIn();
             ReadIsIn();
 
+            //create patients
+            CreatePatient();
+
+            //create inpatients
+            CreateInPatient();
+        
+            ReadInPatient();
             Console.Read();
+        }
+
+        static void CreateInPatient()
+        {
+            InPatient inPatient = new InPatient();
+            inPatient.ActualDateLeft = new DateTime(2001, 10, 10);
+            inPatient.DatePlacedOnWaitingList = new DateTime(2000, 09, 09);
+            inPatient.ExpectedDurationOfStay = 10;
+            inPatient.InWardOrWaitingList = "Ward";
+            inPatient.DateExpectedToLeave = new DateTime(2001, 10, 10);
+            
+            inPatient.PatientNumber = 4;
+            inPatient.WardNumber = 4;
+            InPatientsController ipc = new InPatientsController();
+            SqlException ipcer = ipc.Create(inPatient);
+        }
+
+        static void ReadInPatient()
+        {
+            InPatientsController ipc = new InPatientsController();
+            SqlException ipcer = ipc.Read(4);
+
+        }
+
+        static void CreatePatient()
+        {
+            for (int i = 1; i < 10; i++)
+            {
+                Patient patient = new Patient();
+                patient.Address = "patientvej 9"+i;
+                patient.DateOfBirth = new DateTime(2000, i, 10);
+                patient.FirstName = "hamun" +i;
+                patient.Gender = "male";
+                patient.LastName = "thepatient";
+                patient.MartialStatus = "single";
+                patient.PatientNumber = i;
+                patient.Telephone = "+5412056"+i;
+
+                PatientController pc = new PatientController();
+                SqlException pcer = pc.Create(patient);
+            }
+        }
+
+
+        static void ReadPatient()
+        {
+
+        }
+        static void DeletePatient()
+        {
+
+        }
+        static void UpdatePatient()
+        {
+
         }
 
         static void CreateIsIn()
@@ -184,6 +245,7 @@ namespace ConsoleWellMeadowHospital
                 SqlException pecc = pc.Create(p);
                 SqlException pacec = pac.Create(pa);
                 SqlException errorCode = sc.Create(staff);
+
             }
         }
     }
